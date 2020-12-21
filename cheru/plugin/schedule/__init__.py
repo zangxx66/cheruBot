@@ -204,7 +204,7 @@ async def writeJson(p, info):
 scheduler = require("nonebot_plugin_apscheduler").scheduler
 
 
-@scheduler.scheduled_job('cron', hours='8', minute='0')
+@scheduler.scheduled_job('cron', hour='8', minute='0')
 async def send_schedule():
     status = await refresh_schedule()
     if get_bots():
