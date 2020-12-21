@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "cheru"
+version = "0.1.0"
+description = ""
+authors = ["ricardo <thespirit@vip.qq.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+nonebot2 = "^2.0.0-alpha.7"
+nonebot-plugin-sentry = "^0.1.1"
+nonebot-plugin-apscheduler = "^0.1.0"
+python-dateutil = "^2.8.1"
+zhconv = "^1.4.1"
+nonebot-plugin-docs = "^2.0.0-alpha.7"
+nonebot-plugin-test = "^0.1.0"
+requests = "^2.25.1"
+pixivpy = "^3.5.10"
+pillow = "^8.0.1"
+matplotlib = "^3.3.3"
+numpy = "1.19.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+flake8 = "^3.8.4"
+black = "^20.8b1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
