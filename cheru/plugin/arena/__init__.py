@@ -159,7 +159,7 @@ async def arena_err_got(bot: Bot, event: Event, state: dict):
     res = ''
     if not code:
         for index in ERROR_CODE:
-            res = += f'{index}:{ERROR_CODE[index]}\n'
+            res += f'{index}:{ERROR_CODE[index]}\n'
         res = res.strip()
         res = f'''
 常见错误码如下：
