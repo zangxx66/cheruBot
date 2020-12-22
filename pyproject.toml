@@ -18,6 +18,7 @@ pixivpy = "^3.5.10"
 pillow = "^8.0.1"
 matplotlib = "^3.3.3"
 numpy = "1.19.3"
+fuzzywuzzy = "^0.18.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
