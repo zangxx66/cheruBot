@@ -94,6 +94,10 @@ def guess_id(name):
     return roster.guess_id(name)
 
 
+def update():
+    roster.update()
+
+
 def is_npc(id_):
     if id_ in UnavailableChara:
         return True
