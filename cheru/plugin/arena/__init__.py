@@ -1,5 +1,6 @@
 from .data_source import *
-from nonebot import MatcherGroup
+import nonebot
+from nonebot import MatcherGroup, require
 from nonebot.log import logger
 from nonebot.permission import GROUP, PRIVATE
 from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
@@ -9,6 +10,7 @@ import time
 import os
 from collections import defaultdict
 from PIL import Image, ImageSequence, ImageDraw, ImageFont
+import numpy as np
 
 
 font_path = res.get('font/seguiemj.ttf').path
@@ -178,3 +180,66 @@ sv_refresh = sv.on_command(cmd='arena_refresh', aliases={'刷新作业'}, permis
 async def arena_refresh(bot: Bot, event: Event, state: dict):
     res = await _arena_query(bot, event, 1, True)
     await sv_refresh.finish(res)
+
+
+scheduler = require("nonebot_plugin_apscheduler").scheduler
+
+
+@scheduler.scheduled_job('cron', hour='14', minute='45')
+async def beici():
+    if nonebot.get_bots():
+        bot = list(nonebot.get_bots().values())[0]
+    else:
+        logger.warning('未连接任何ws对象')
+        return
+    msg = '骑士君、准备好背刺了吗？'
+    await helper.broadcast(bot, msg, 'arena_reminder')
+
+
+this_season = np.zeros(15001, dtype=int)
+all_season = np.zeros(15001, dtype=int)
+
+this_season[1:11] = 50
+this_season[11:101] = 10
+this_season[101:201] = 5
+this_season[201:501] = 3
+this_season[501:1001] = 2
+this_season[1001:2001] = 2
+this_season[2001:4000] = 1
+this_season[4000:8000:100] = 50
+this_season[8100:15001:100] = 15
+
+all_season[1:11] = 500
+all_season[11:101] = 50
+all_season[101:201] = 30
+all_season[201:501] = 10
+all_season[501:1001] = 5
+all_season[1001:2001] = 3
+all_season[2001:4001] = 2
+all_season[4001:7999] = 1
+all_season[8100:15001:100] = 30
+
+wakuang_aliases = {'挖矿', 'jjc钻石', '竞技场钻石', 'jjc钻石查询', '竞技场钻石查询'}
+sv_wakuang = sv.on_command(cmd='arean_wakuang', aliases=wakuang_aliases, permission=GROUP, block=True)
+
+
+@sv_wakuang.handle()
+async def wakuang_handle(bot: Bot, event: Event, state: dict):
+    msg = str(event.message).strip()
+    try:
+        state['rank'] = int(msg)
+    except Exception as e:
+        logger.error(e)
+        await sv_wakuang.finish()
+
+
+@sv_wakuang.got('rank')
+async def wakuang_got(bot: Bot, event: Event, state: dict):
+    rank = state['rank']
+    rank = np.clip(rank, 1, 15001)
+    s_all = all_season[1:rank].sum()
+    s_this = this_season[1:rank].sum()
+    uid = event.user_id
+    at = MessageSegment.at(uid)
+    msg = f'{at}\n最高排名奖励还剩{s_this}钻\n历届最高排名还剩{s_all}钻'
+    await sv_wakuang.finish(msg)

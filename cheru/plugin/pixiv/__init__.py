@@ -58,9 +58,11 @@ async def pixiv_search(keyword):
         resp = await aiorequests.get(url, headers=headers, timeout=20)
         res = await resp.json()
     except Exception as e:
+        logger.error(e)
         return None
     error = res['error']
     if error is True:
+        logger.error(f'pixiv | pixiv_search| {res}')
         return None
     body = res['body']
     popular = body['popular']
