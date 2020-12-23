@@ -4,7 +4,9 @@ A QQ bot for プリコネR
 
 ## 简介  
 
-**cheruBot:** 基于 [nonebot2](https://github.com/nonebot/nonebot2) 框架的QQ机器人，正在将自己魔改的Bot从nonebot迁移至nonebot2中  
+**cheruBot:** 基于 [nonebot2](https://github.com/nonebot/nonebot2) 框架的QQ机器人，正在将自己魔改的hoshino从nonebot迁移至nonebot2中  
+
+**不要直接用于生产环境当中，源码并没有做任何完整流程的测试，会战管理部分将会把hoshino和yobot融合**  
 
 ## 目录
 
@@ -38,17 +40,17 @@ A QQ bot for プリコネR
 
 cheruBot 以公主连结国服为主，为玩家提供各种方便的服务：
  
-**日程表推送**  
-**pixiv查询**  
-~~**公会战管理**~~  
-**切噜语翻译**  
-**jjc挖矿查询**  
-~~**官方动态推送**~~  
-**官方四格漫画推送**  
-~~**抽卡模拟**~~  
-**jjc作业查询**  
-**jjc背刺提醒**  
-**随机签到印章**  
+- [x] 日程表推送  
+- [x] pixiv查询  
+- [ ] 公会战管理  
+- [x] 切噜语翻译  
+- [x] jjc挖矿查询  
+- [x] 官方动态推送  
+- [x] 官方四格漫画推送  
+- [x] 抽卡模拟  
+- [x] jjc作业查询  
+- [x] jjc背刺提醒  
+- [x] 随机签到印章  
 
 ## 安装部署    
 

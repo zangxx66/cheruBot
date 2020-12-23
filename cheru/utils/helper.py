@@ -7,10 +7,15 @@ import zhconv
 import asyncio
 import pytz
 import time
+import os
 from collections import defaultdict
 from datetime import datetime, timedelta
 from nonebot.adapters.cqhttp import Bot, MessageSegment, Message
 from nonebot.log import logger
+try:
+    import ujson as json
+except:
+    import json
 
 
 class FreqLimiter:
@@ -103,6 +108,21 @@ def is_number(s):
     except (TypeError, ValueError):
         pass
     return False
+
+
+def load_config(inbuilt_file_var):
+    """
+    Just use `config = load_config(__file__)`,
+    you can get the config.json as a dict.
+    """
+    filename = os.path.join(os.path.dirname(inbuilt_file_var), 'config.json')
+    try:
+        with open(filename, encoding='utf8') as f:
+            config = json.load(f)
+            return config
+    except Exception as e:
+        logger.exception(e)
+        return {}
 
 
 async def broadcast(bot: Bot, msg, sv_name, interval_time=0.5, randomiser=None):
