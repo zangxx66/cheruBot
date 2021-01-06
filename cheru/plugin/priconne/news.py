@@ -6,6 +6,7 @@ from nonebot.matcher import Matcher
 from nonebot.log import logger
 from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
 from nonebot.permission import GROUP
+from nonebot_plugin_rauthman import isInService
 from cheru.utils import helper
 
 
@@ -32,7 +33,7 @@ async def send_news(bot: Bot, ev: Event, spider: BaseSpider, sv: Matcher, max_nu
 
 
 sv_news = sv.on_command(cmd='blnews', aliases={
-                        'B服新闻', 'b服新闻', 'B服日程', 'b服日程'}, permission=GROUP, block=True)
+                        'B服新闻', 'b服新闻', 'B服日程', 'b服日程'}, permission=GROUP, block=True, rule=isInService('B服新闻', 1))
 
 
 @sv_news.handle()
@@ -50,4 +51,4 @@ async def news_scheduler():
     else:
         logger.warning('未连接任何ws对象')
         return
-    await news_poller(bot, BiliSpider, 'B服官网')
+    await news_poller(bot, BiliSpider, 'B服新闻')

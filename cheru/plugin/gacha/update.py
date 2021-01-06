@@ -71,6 +71,7 @@ async def update_pcrdata():
             chara.download_chara_icon(id, 3)
             chara.download_chara_icon(id, 1)
     # 重载花名册(不会引起全局reload)
+    _pcr_data.chara_master.sort()
     chara.update()
 
 

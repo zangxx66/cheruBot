@@ -5,6 +5,7 @@ from nonebot import MatcherGroup
 from nonebot.log import logger
 from nonebot.permission import GROUP
 from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
+from nonebot_plugin_rauthman import isInService
 from urllib.parse import quote
 # from pixivpy3 import AppPixivAPI
 from pixivpy3 import ByPassSniApi
@@ -18,7 +19,7 @@ sv = MatcherGroup(type='message')
 aapi = ByPassSniApi()
 aapi.require_appapi_hosts(hostname="public-api.secure.pixiv.net")
 aapi.set_accept_language('jp')
-sv_search = sv.on_startswith(msg='/pixiv', permission=GROUP, block=True)
+sv_search = sv.on_startswith(msg='/pixiv', permission=GROUP, block=True, rule=isInService('pixiv', 1))
 
 
 @sv_search.handle()

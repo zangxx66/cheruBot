@@ -35,7 +35,7 @@ class sqlite:
             colunm_name = colunm_name[:-1]
             self._connect()
             self.cursor.execute(f'''CREATE TABLE IF NOT EXISTS {table}
-            (GID INTEGER PRIMARY KEY AUTOINCREMENT,
+            (ID INTEGER PRIMARY KEY AUTOINCREMENT,
             {colunm_name}
             );''')
             self.conn.commit()

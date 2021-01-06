@@ -20,6 +20,7 @@ matplotlib = "^3.3.3"
 numpy = "1.19.3"
 fuzzywuzzy = "^0.18.0"
 beautifulsoup4 = "^4.9.3"
+nonebot-plugin-rauthman = "^2.0.0-rc.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

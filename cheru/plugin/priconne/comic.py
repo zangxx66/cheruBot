@@ -2,13 +2,12 @@ from . import sv
 import nonebot
 from nonebot import require
 from nonebot.log import logger
-from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
+from nonebot.adapters.cqhttp import Bot, Event
 from nonebot.permission import GROUP
+from nonebot_plugin_rauthman import isInService
 import os
 import re
-import random
-import asyncio
-from urllib.parse import urljoin, urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs
 try:
     import ujson as json
 except:
@@ -80,7 +79,7 @@ async def download_comic(id_):
 
 
 sv_search = sv.on_command(cmd='comic_search', aliases={
-                          '官漫'}, permission=GROUP, block=True)
+                          '官漫'}, permission=GROUP, block=True, rule=isInService('官漫', 1))
 
 
 @sv_search.handle()
@@ -138,4 +137,4 @@ async def comic_scheduler():
     await download_comic(id_)
     pic = res.img('priconne/comic', get_pic_name(episode)).cqcode
     msg = f'プリンセスコネクト！Re:Dive公式4コマ更新！\n第{episode}話 {title}\n{pic}'
-    await helper.broadcast(bot, msg, 'PCR官方四格', 0.5)
+    await helper.broadcast(bot, msg, '官漫', 0.5)

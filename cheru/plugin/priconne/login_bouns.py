@@ -1,12 +1,13 @@
 from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
 from nonebot.permission import GROUP
+from nonebot_plugin_rauthman import isInService
 from cheru.utils import helper, res
 from . import sv
 import random
 import os
 
 sv_login = sv.on_command(cmd='login_bonus', aliases={
-                         '签到'}, permission=GROUP, block=True)
+                         '签到'}, permission=GROUP, block=True, rule=isInService('签到', 1))
 
 lmt = helper.DailyNumberLimiter(1)
 login_presents = [

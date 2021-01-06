@@ -9,6 +9,7 @@ from nonebot import MatcherGroup, require, get_bots
 from nonebot.permission import GROUP
 from nonebot.adapters.cqhttp import Bot, Event
 from nonebot.log import logger
+from nonebot_plugin_rauthman import isInService
 from cheru.utils import helper
 
 
@@ -31,7 +32,7 @@ day_key = ["qdhd", "tdz", "tbhd", "jqhd"]
 
 
 sv = MatcherGroup(type='message')
-sv_query = sv.on_command(cmd='schedule', aliases={'国服日程表', '日程表'}, permission=GROUP, block=True)
+sv_query = sv.on_command(cmd='schedule', aliases={'国服日程表', '日程表'}, permission=GROUP, block=True, rule=isInService('schedule', 1))
 
 
 @sv_query.handle()
@@ -62,7 +63,7 @@ async def Schedule(bot: Bot, ev: Event, state: dict):
         await sv_query.finish(result)
 
 
-sv_refresh = sv.on_command(cmd='schedule_refresh', aliases={'刷新日程表'}, permission=GROUP, block=True)
+sv_refresh = sv.on_command(cmd='schedule_refresh', aliases={'刷新日程表'}, permission=GROUP, block=True, rule=isInService('schedule', 1))
 
 
 @sv_refresh.handle()
@@ -79,7 +80,7 @@ async def re_Schedule(bot: Bot, ev: Event, state: dict):
         await sv_refresh.finish(f'刷新日程表失败，错误代码{status[1]}')
 
 
-sv_today = sv.on_command(cmd='schedule_today', aliases={'今日活动', '日程', '今日日程'}, permission=GROUP, block=True)
+sv_today = sv.on_command(cmd='schedule_today', aliases={'今日活动', '日程', '今日日程'}, permission=GROUP, block=True, rule=isInService('schedule', 1))
 
 
 @sv_today.handle()
@@ -223,4 +224,4 @@ async def send_schedule():
     data['Refresh_date'] = str(datetime.date.today())
     await writeJson(p, data)
     result = await return_schedule(1)
-    await helper.broadcast(bot, result, '日程表', 2)
+    await helper.broadcast(bot, result, 'schedule', 2)

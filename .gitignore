@@ -5,7 +5,8 @@ database.json
 *.sqlite
 
 # 日志文件
-cheru/log/
+log/
+data/
 
 # VSCode Folder
 .vscode/

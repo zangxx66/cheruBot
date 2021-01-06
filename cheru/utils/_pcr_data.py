@@ -1,5 +1,6 @@
 import os
 import json
+from collections import OrderedDict
 
 
 CHARA_NAME = {}
@@ -63,6 +64,16 @@ class CharaMaster:
 
     def add_nickname(self, id: int, nickname: str) -> None:
         CHARA_NAME[id].append(nickname)
+        self.__save_pcr_data()
+
+    def sort(self) -> None:
+        global CHARA_NAME
+        keys = sorted(CHARA_NAME.keys(), reverse=False)
+        # print(dict(t))
+        dic = OrderedDict()
+        for key in keys:
+            dic[key] = CHARA_NAME[key]
+        CHARA_NAME = dic.copy()
         self.__save_pcr_data()
 
 

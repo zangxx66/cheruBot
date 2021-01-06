@@ -2,6 +2,7 @@ import nonebot
 from nonebot import MatcherGroup
 from nonebot.permission import PRIVATE, GROUP_ADMIN, GROUP, SUPERUSER
 from nonebot.adapters.cqhttp import Bot, Event
+import cheru
 
 
 sv = MatcherGroup(type='message')
@@ -43,11 +44,9 @@ sv_v = sv.on_command(cmd='version', aliases={'V', 'v', 'ver', '查看版本'}, p
 
 @sv_v.handle()
 async def handle_get_ver(bot: Bot, event: Event, state: dict):
-    try:
-        res = await bot.get_version_info()
-    except:
-        await sv_v.finish('error')
-    msg = '\n'.join([f'{item}:{res[item]}' for item in res])
+    v = cheru.version
+    n = cheru.name
+    msg = f'{n}[{v}]'
     await sv_v.finish(msg)
 
 

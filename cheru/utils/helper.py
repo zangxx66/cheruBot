@@ -12,6 +12,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from nonebot.adapters.cqhttp import Bot, MessageSegment, Message
 from nonebot.log import logger
+from nonebot_plugin_rauthman import loadJson, auth
 try:
     import ujson as json
 except:
@@ -133,6 +134,8 @@ async def broadcast(bot: Bot, msg, sv_name, interval_time=0.5, randomiser=None):
     for group in group_list:
         try:
             gid = group['group_id']
+            if not check_per(gid, sv_name):
+                continue
             for message in msg:
                 await asyncio.sleep(interval_time)
                 message = randomiser(message) if randomiser else message
@@ -141,4 +144,18 @@ async def broadcast(bot: Bot, msg, sv_name, interval_time=0.5, randomiser=None):
             if l:
                 logger.info(f'{sv_name} | 群{gid}投递{l}条消息成功')
         except Exception as e:
+            logger.error(e)
             logger.info(f'{sv_name} | 群{gid}投递消息失败')
+
+
+def check_per(group_id, sv_name):
+    data = loadJson(auth.authData)
+    if f'{group_id}' not in data:
+        return False
+    if sv_name:
+        if 'enabled' not in data[f'{group_id}']:
+            return False
+        return bool(sv_name in data[f'{group_id}']['enabled'])
+    if f'{group_id}' not in data:
+        return False
+    return True

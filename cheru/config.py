@@ -7,16 +7,16 @@ PORT = 9222
 HOST = '127.0.0.1'
 # HOST='172.17.0.1' # linux+docker用这个
 # 配置超级用户
-SUPERUSERS = []
+SUPERUSERS = [849694269]
 # 配置机器人昵称
-NICKNAME = ['']
+NICKNAME = ['xcw']
 # 配置命令起始字符
 COMMAND_START = {''}
 # 配置命令分割字符
 COMMAND_SEP = set()
 
 # Debug模式，不知道是什么请关闭
-DEBUG = False
+DEBUG = True
 
 # 发送图片/语音协议
 # 可选'base64，http，file'

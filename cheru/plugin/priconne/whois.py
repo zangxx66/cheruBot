@@ -1,13 +1,14 @@
 from . import sv
 from nonebot.log import logger
 from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
-from nonebot.permission import GROUP, GROUP_ADMIN
+from nonebot.permission import GROUP, SUPERUSER
 from nonebot.exception import FinishedException, NetworkError
+from nonebot_plugin_rauthman import isInService
 from cheru.utils import helper, res, chara
 import re
 
 
-sv_whois = sv.on_regex(r'^((谁是|誰是)(.*)|(.*)(是谁|是誰))', permission=GROUP, block=True)
+sv_whois = sv.on_regex(r'^((谁是|誰是)(.*)|(.*)(是谁|是誰))', permission=GROUP, block=True, rule=isInService('whois', 1))
 lmt = helper.FreqLimiter(5)
 
 
@@ -40,7 +41,7 @@ async def whois(bot: Bot, event: Event, state: dict):
 
 
 sv_reload = sv.on_command(cmd='reload_juese', aliases={
-                          '重载角色花名册'}, permission=GROUP_ADMIN, block=True)
+                          '重载角色花名册'}, permission=SUPERUSER, block=True)
 
 
 @sv_reload.handle()
