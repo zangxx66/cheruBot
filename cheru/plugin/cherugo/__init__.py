@@ -1,12 +1,12 @@
 import re
 from itertools import zip_longest
 from nonebot.adapters.cqhttp import escape, Bot, Event, MessageSegment
-from nonebot.permission import GROUP
+from nonebot.permission import MESSAGE
 from nonebot import MatcherGroup
 from nonebot_plugin_rauthman import isInService
 
 
-sv = MatcherGroup(type='message')
+sv = MatcherGroup(type='message', rule=isInService('cherugo', 1))
 
 CHERU_SET = '切卟叮咧哔唎啪啰啵嘭噜噼巴拉蹦铃'
 CHERU_DIC = {c: i for i, c in enumerate(CHERU_SET)}
@@ -53,7 +53,8 @@ def cheru2str(c: str) -> str:
     return rex_cheru_word.sub(lambda w: cheru2word(w.group()), c)
 
 
-sv_txt_to_cheru = sv.on_startswith(msg='切噜一下', permission=GROUP, block=True, rule=isInService('cherugo', 1))
+sv_txt_to_cheru = sv.on_startswith(
+    msg='切噜一下', permission=MESSAGE, block=True)
 
 
 @sv_txt_to_cheru.handle()
@@ -75,7 +76,8 @@ async def cherulize_cheru(bot: Bot, event: Event, state: dict):
     await sv_txt_to_cheru.finish(res)
 
 
-sv_cheru_to_txt = sv.on_startswith(msg='切噜～♪', permission=GROUP, block=True, rule=isInService('cherugo', 1))
+sv_cheru_to_txt = sv.on_startswith(
+    msg='切噜～♪', permission=MESSAGE, block=True)
 
 
 @sv_cheru_to_txt.handle()

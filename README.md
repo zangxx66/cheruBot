@@ -6,7 +6,7 @@ A QQ bot for プリコネR
 
 **cheruBot:** 基于 [nonebot2](https://github.com/nonebot/nonebot2) 框架的QQ机器人，正在将自己魔改的hoshino从nonebot迁移至nonebot2中  
 
-**不要直接用于生产环境当中，源码并没有做任何完整流程的测试，会战管理部分将会把hoshino和yobot融合**  
+**不要直接用于生产环境当中，源码并没有做任何完整流程的测试**  
 
 ## 目录
 
@@ -42,7 +42,7 @@ cheruBot 以公主连结国服为主，为玩家提供各种方便的服务：
  
 - [x] 日程表推送  
 - [x] pixiv查询  
-- [ ] 公会战管理  
+- [x] 公会战  
 - [x] 切噜语翻译  
 - [x] jjc挖矿查询  
 - [x] 官方动态推送  
@@ -94,4 +94,10 @@ poetry run python3.8 run.py
 [pcrbot](https://github.com/pcrbot)  
 [干炸里脊资源站](https://redive.estertion.win/)  
 [公主连结Re: Dive Fan Club - 硬核的竞技场数据分析站](https://pcrdfans.com/)  
-以及各种插件的作者
+以及各种插件的作者  
+
+## Changelog  
+
+### 2021/2/4  
+- 搬运HoshinoBot的会战模块  
+- 增加分群管理（已知bug：分群管理暂不生效）

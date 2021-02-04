@@ -3,7 +3,7 @@ from cheru.utils import helper
 import nonebot
 from nonebot import MatcherGroup
 from nonebot.log import logger
-from nonebot.permission import GROUP
+from nonebot.permission import MESSAGE
 from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
 from nonebot_plugin_rauthman import isInService
 from urllib.parse import quote
@@ -14,12 +14,13 @@ import random
 import datetime
 
 
-sv = MatcherGroup(type='message')
+sv = MatcherGroup(type='message', rule=isInService('pixiv', 1))
 # aapi = AppPixivAPI()
 aapi = ByPassSniApi()
 aapi.require_appapi_hosts(hostname="public-api.secure.pixiv.net")
 aapi.set_accept_language('jp')
-sv_search = sv.on_startswith(msg='/pixiv', permission=GROUP, block=True, rule=isInService('pixiv', 1))
+sv_search = sv.on_startswith(
+    msg='/pixiv', permission=MESSAGE, block=True)
 
 
 @sv_search.handle()
@@ -113,7 +114,8 @@ async def get_image(pid):
     return msg
 
 
-sv_rank = sv.on_command(cmd='pixiv_rank', aliases={'/p站排行榜'}, permission=GROUP, block=True)
+sv_rank = sv.on_command(cmd='pixiv_rank', aliases={
+                        '/p站排行榜'}, permission=MESSAGE, block=True)
 
 
 @sv_rank.handle()

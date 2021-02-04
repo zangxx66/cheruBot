@@ -3,7 +3,7 @@ import nonebot
 from nonebot import require
 from nonebot.log import logger
 from nonebot.adapters.cqhttp import Bot, Event
-from nonebot.permission import GROUP
+from nonebot.permission import MESSAGE
 from nonebot_plugin_rauthman import isInService
 import os
 import re
@@ -79,7 +79,7 @@ async def download_comic(id_):
 
 
 sv_search = sv.on_command(cmd='comic_search', aliases={
-                          '官漫'}, permission=GROUP, block=True, rule=isInService('官漫', 1))
+                          '官漫'}, permission=MESSAGE, block=True, rule=isInService('官漫', 1))
 
 
 @sv_search.handle()

@@ -1,14 +1,15 @@
 from . import sv
 from nonebot.log import logger
 from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
-from nonebot.permission import GROUP, SUPERUSER
+from nonebot.permission import MESSAGE, SUPERUSER
 from nonebot.exception import FinishedException, NetworkError
 from nonebot_plugin_rauthman import isInService
 from cheru.utils import helper, res, chara
 import re
 
 
-sv_whois = sv.on_regex(r'^((谁是|誰是)(.*)|(.*)(是谁|是誰))', permission=GROUP, block=True, rule=isInService('whois', 1))
+sv_whois = sv.on_regex(r'^((谁是|誰是)(.*)|(.*)(是谁|是誰))',
+                       permission=MESSAGE, block=True, rule=isInService('whois', 1))
 lmt = helper.FreqLimiter(5)
 
 

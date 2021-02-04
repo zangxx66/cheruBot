@@ -43,7 +43,7 @@ def init():
     driver = nonebot.get_driver()
     driver.register_adapter('cqhttp', CQHTTPBot)
 
-    config_ = nonebot.get_driver().config
+    config_ = driver.config
     config_.savedata = 'data/service'
 
     nonebot.load_builtin_plugins()

@@ -1,6 +1,6 @@
 import nonebot
 from nonebot import MatcherGroup
-from nonebot.permission import PRIVATE, GROUP_ADMIN, GROUP, SUPERUSER
+from nonebot.permission import MESSAGE, SUPERUSER
 from nonebot.adapters.cqhttp import Bot, Event
 import cheru
 
@@ -39,7 +39,7 @@ TCP链接断开次数：{disconnect_times}
     await sv_status.finish(msg)
 
 
-sv_v = sv.on_command(cmd='version', aliases={'V', 'v', 'ver', '查看版本'}, permission=GROUP, block=True)
+sv_v = sv.on_command(cmd='version', aliases={'V', 'v', 'ver', '查看版本'}, permission=MESSAGE, block=True)
 
 
 @sv_v.handle()

@@ -2,7 +2,7 @@ from .data_source import *
 import nonebot
 from nonebot import MatcherGroup, require
 from nonebot.log import logger
-from nonebot.permission import GROUP, PRIVATE
+from nonebot.permission import MESSAGE
 from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
 from cheru.utils import chara, helper, res
 import re
@@ -25,7 +25,7 @@ aliases_jp = {'日' + a for a in aliases}
 
 
 sv = MatcherGroup(type='message')
-sv_all = sv.on_command(cmd='arena_all', aliases=aliases, permission=GROUP, block=True)
+sv_all = sv.on_command(cmd='arena_all', aliases=aliases, permission=MESSAGE, block=True)
 
 
 @sv_all.handle()
@@ -34,7 +34,8 @@ async def arena_all(bot: Bot, event: Event, state: dict):
     await sv_all.finish(res)
 
 
-sv_bl = sv.on_command(cmd='arena_bl', aliases=aliases_b, permission=GROUP, block=True)
+sv_bl = sv.on_command(cmd='arena_bl', aliases=aliases_b,
+                      permission=MESSAGE, block=True)
 
 
 @sv_bl.handle()
@@ -43,7 +44,8 @@ async def arena_bl(bot: Bot, event: Event, state: dict):
     await sv_bl.finish(res)
 
 
-sv_jp = sv.on_command(cmd='arena_jp', aliases=aliases_jp, permission=GROUP, block=True)
+sv_jp = sv.on_command(cmd='arena_jp', aliases=aliases_jp,
+                      permission=MESSAGE, block=True)
 
 
 @sv_jp.handle()
@@ -52,7 +54,8 @@ async def arena_jp(bot: Bot, event: Event, state: dict):
     await sv_jp.finish(res)
 
 
-sv_tw = sv.on_command(cmd='arena_tw', aliases=aliases_tw, permission=GROUP, block=True)
+sv_tw = sv.on_command(cmd='arena_tw', aliases=aliases_tw,
+                      permission=MESSAGE, block=True)
 
 
 @sv_tw.handle()
@@ -146,7 +149,8 @@ async def _arena_query(bot: Bot, event: Event, region: int, refresh=False):
     return '\n'.join(msg)
 
 
-sv_errcode = sv.on_command(cmd='arena_err', aliases={'查询jjc错误码'}, permission=GROUP, block=True)
+sv_errcode = sv.on_command(cmd='arena_err', aliases={
+                           '查询jjc错误码'}, permission=MESSAGE, block=True)
 
 
 @sv_errcode.handle()
@@ -173,7 +177,8 @@ async def arena_err_got(bot: Bot, event: Event, state: dict):
     await sv_errcode.finish(res)
 
 
-sv_refresh = sv.on_command(cmd='arena_refresh', aliases={'刷新作业'}, permission=GROUP, block=True)
+sv_refresh = sv.on_command(cmd='arena_refresh', aliases={
+                           '刷新作业'}, permission=MESSAGE, block=True)
 
 
 @sv_refresh.handle()
@@ -220,7 +225,8 @@ all_season[4001:7999] = 1
 all_season[8100:15001:100] = 30
 
 wakuang_aliases = {'挖矿', 'jjc钻石', '竞技场钻石', 'jjc钻石查询', '竞技场钻石查询'}
-sv_wakuang = sv.on_command(cmd='arean_wakuang', aliases=wakuang_aliases, permission=GROUP, block=True)
+sv_wakuang = sv.on_command(
+    cmd='arean_wakuang', aliases=wakuang_aliases, permission=MESSAGE, block=True)
 
 
 @sv_wakuang.handle()

@@ -5,17 +5,17 @@ import re
 from nonebot import MatcherGroup
 from nonebot.matcher import Matcher
 from nonebot.adapters.cqhttp import Bot, Event, MessageSegment
-from nonebot.permission import GROUP, GROUP_ADMIN
+from nonebot.permission import MESSAGE
 from nonebot.log import logger
 from nonebot_plugin_rauthman import isInService
-from cheru.utils import helper, chara
+from cheru.utils import helper, chara, priv
 from .gacha import Gacha
 try:
     import ujson as json
 except:
     import json
 
-sv = MatcherGroup(type='message')
+sv = MatcherGroup(type='message', rule=isInService('gacha', 1))
 
 from .update import *
 
@@ -50,7 +50,7 @@ gacha_300_aliases = {'抽一井', '来一井', '来发井', '抽发井', '天井
 
 
 sv_info = sv.on_command(cmd='gacha_info', aliases={
-                        '卡池资讯', '查看卡池', '看看卡池', '康康卡池', '看看up', '看看UP'}, permission=GROUP, block=True, rule=isInService('gacha', 1))
+                        '卡池资讯', '查看卡池', '看看卡池', '康康卡池', '看看up', '看看UP'}, permission=MESSAGE, block=True)
 
 
 @sv_info.handle()
@@ -65,14 +65,17 @@ async def gacha_info(bot: Bot, event: Event, state: dict):
 
 
 POOL_NAME_TIP = '请选择以下卡池\n> 选择卡池 jp\n> 选择卡池 tw\n> 选择卡池 bilibili\n> 选择卡池 fes\n> 选择卡池 七冠\n> 选择卡池 联动\n> 选择卡池 限定（现已全部实装）\n> 选择卡池 mix'
-sv_pool = sv.on_command(cmd='set_pool', aliases={'切换卡池', '选择卡池'}, permission=GROUP_ADMIN, block=True, rule=isInService('gacha', 1))
+sv_pool = sv.on_command(cmd='set_pool', aliases={
+                        '切换卡池', '选择卡池'}, permission=MESSAGE, block=True)
 
 
 @sv_pool.handle()
 async def pool_handle(bot: Bot, event: Event, state: dict):
-    msg = helper.normalize_str(event.plain_text)
+    msg = helper.normalize_str(event.message.extract_plain_text())
     if not msg:
         await sv_pool.finish(POOL_NAME_TIP)
+    if not priv.check_priv(event, priv.ADMIN):
+        await sv_pool.finish('切换卡池请联系管理员')
     state['pool'] = msg
 
 
@@ -172,7 +175,8 @@ async def check_tenjo_num(sv: Matcher, uid):
         await sv.finish(TENJO_EXCEED_NOTICE)
 
 
-sv_one = sv.on_command(cmd='one_gacha', aliases=gacha_1_aliases, permission=GROUP, block=True, rule=isInService('gacha', 1))
+sv_one = sv.on_command(cmd='one_gacha', aliases=gacha_1_aliases,
+                       permission=MESSAGE, block=True)
 
 
 @sv_one.handle()
@@ -200,7 +204,8 @@ async def gacha_one(bot: Bot, event: Event, state: dict):
     await sv_one.finish(f'素敵な仲間が増えますよ！\n{res}', **kwargs)
 
 
-sv_ten = sv.on_command(cmd='ten_gacha', aliases=gacha_10_aliases, permission=GROUP, block=True, rule=isInService('gacha', 1))
+sv_ten = sv.on_command(cmd='ten_gacha', aliases=gacha_10_aliases,
+                       permission=MESSAGE, block=True)
 
 
 @sv_ten.handle()
@@ -239,7 +244,7 @@ async def gacha_ten(bot: Bot, event: Event, state: dict):
 
 
 sv_jing = sv.on_command(cmd='gacha_jing', aliases=gacha_300_aliases,
-                        permission=GROUP, block=True, rule=isInService('gacha', 1))
+                        permission=MESSAGE, block=True)
 
 
 @sv_jing.handle()
